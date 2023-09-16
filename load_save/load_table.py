@@ -4,15 +4,19 @@ from collections import defaultdict
 
 def load_table(location, format):
     print(f'Opening file: {location}')
-    data = defaultdict(lambda: None)
+
+    file_name = location.split('/')[-1]
+    data = {}
 
     with open(location, 'rb') as file:
         if format == 'csv':
-            data[location.split('/')[-1]] = pd.read_csv(file)
-        # elif format == 'xlsx':
-        #     data['data'] = pd.read_excel(file)
-            # for sheet in excel.sheet_names:
-            #     data[sheet] = excel.parse(sheet)
+            data[file_name] = pd.read_csv(file)
+        elif format == 'xlsx':
+            temp_data = pd.read_excel(file)
+            data[file_name] = temp_data
 
     print(f'Data extracted successfully')
-    return data
+    return {
+        'file_name': file_name,
+        'data': data
+    }

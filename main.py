@@ -6,10 +6,11 @@ from load_save.load import load
 
 
 def main():
-    location = os.path.join(config.base_path, 'data', 'Bike_Features.csv')
-    # location = os.path.join(config.base_path, 'data', 'master_indore.xlsx')
+    # location = os.path.join(config.base_path, 'data', 'Bike_Features.csv')
+    location = os.path.join(config.base_path, 'data', 'iris.json')
     report = load(location)
-    print(report)
+    for key in report:
+        print(key, ':', report[key])
 
 
 if __name__ == '__main__':

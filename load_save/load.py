@@ -1,4 +1,5 @@
 import os
+import config
 
 
 from load_save.load_table import load_table
@@ -10,6 +11,7 @@ def load(location):
         'status': False,
         'note': None,
         'format': None,
+        'file_name': None,
         'data': None
     }
 
@@ -20,8 +22,21 @@ def load(location):
     report['format'] = location.split('.')[-1]
 
     if report['format'] in ['csv', 'xlsx']:
-        report['data'] = load_table(location, report['format'])
+        report_load = load_table(location, report['format'])
     elif report['format'] in ['json']:
-        report['data'] = load_object(location)
+        # report_load = load_table(location, report['format'])
+        report_load = load_object(location)
+        return report
+    else:
+        report['note'] = 'File formate not supported!\nSupported formats: CSV, Excel and JSON'
+        return report
+
+    config.file_loaded += 1
+    config.file_name.append(report_load['file_name'])
+    config.file_data[report_load['file_name']] = report_load['data']
+
+    report['status'] = True
+    report['file_name'] = report_load['file_name']
+    report['data'] = report_load['data']
 
     return report
