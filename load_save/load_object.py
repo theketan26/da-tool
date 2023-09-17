@@ -19,6 +19,8 @@ def load_object(location):
 
     data = obj_to_df(json_file)
 
+    report = {}
+
     print(f'Data extracted successfully')
 
     return {

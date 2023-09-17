@@ -3,6 +3,7 @@ import pandas as pd
 
 def obj_to_df_single(json_file):
     lst_lst = []
+
     headers = {
         'all_headers': set(),
     }
@@ -15,8 +16,6 @@ def obj_to_df_single(json_file):
                 headers[key] = current_col
                 current_col += 1
 
-    lst = []
-
     for obj in json_file:
         lst = [''] * len(headers['all_headers'])
         for header in headers['all_headers']:
@@ -26,6 +25,10 @@ def obj_to_df_single(json_file):
                 lst[headers[header]] = None
         lst_lst.append(lst)
 
-    data = pd.DataFrame(lst_lst, columns=list(headers['all_headers']))
+    heads = [''] * len(headers['all_headers'])
+    for header in headers['all_headers']:
+        heads[headers[header]] = header
+
+    data = pd.DataFrame(lst_lst, columns=heads)
 
     return data

@@ -19,9 +19,14 @@ def obj_to_df(json_file):
         key_percentage[key] = key_percentage[key] / total
 
     can_single = any(map(lambda x: True if x == 1 else False, key_percentage.values()))
-    can_multi = any(map(lambda x: True if any(x) else False,
-                        [map(lambda x: True if type(x) == dict else False, obj)
-                         for obj in json_file]))
+    can_multi = False
+    for obj in json_file:
+        if can_multi:
+            break
+        for key in obj:
+            if type(obj[key]) == dict:
+                can_multi = True
+                break
 
     #
     #
@@ -29,7 +34,7 @@ def obj_to_df(json_file):
     #
     #
 
-    single_multi = True  # True if single else False
+    single_multi = not can_multi  # True if single else False
 
     if single_multi:
         data = obj_to_df_single(json_file)
