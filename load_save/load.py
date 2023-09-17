@@ -23,10 +23,10 @@ def load(location):
 
     if report['format'] in ['csv', 'xlsx']:
         report_load = load_table(location, report['format'])
+
     elif report['format'] in ['json']:
-        # report_load = load_table(location, report['format'])
         report_load = load_object(location)
-        return report
+
     else:
         report['note'] = 'File formate not supported!\nSupported formats: CSV, Excel and JSON'
         return report
