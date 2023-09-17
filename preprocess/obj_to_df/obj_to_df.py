@@ -34,10 +34,13 @@ def obj_to_df(json_file):
     #
     #
 
-    single_multi = not can_multi  # True if single else False
+    single_multi = True  # True if single else False
 
     if single_multi:
-        data = obj_to_df_single(json_file)
+        if not can_multi:
+            data = obj_to_df_single(json_file)
+        else:
+            data = obj_to_df_single(json_file, True)
     else:
         data = obj_to_df_multi(json_file)
 
