@@ -3,6 +3,7 @@ import config
 
 
 from load_save.load import load
+from load_save.save import save
 
 
 def main():
@@ -13,11 +14,19 @@ def main():
     location = os.path.join(config.base_path, 'data', 'multi_json.json')
     report = load(location)
 
-    # for key in report:
-    #     print(key, ':', report[key])
+    # print('Loaded files:', config.file_name)
+    # print('Loaded file data:', config.file_data)
 
-    print('Loaded files:', config.file_name)
-    print('Loaded file data:', config.file_data)
+    location = os.path.join(config.base_path, 'data')
+    report_save = save(config.file_data['iris.json'], 'iris', location, 'csv')
+    for key in report_save:
+        print(key, ':', report_save[key])
+    report_save = save(config.file_data['Bike_Features.csv'], 'bikes', location, 'json')
+    for key in report_save:
+        print(key, ':', report_save[key])
+    report_save = save(config.file_data['multi_json.json'], 'multi_json', location, 'xlsx')
+    for key in report_save:
+        print(key, ':', report_save[key])
 
 
 if __name__ == '__main__':
