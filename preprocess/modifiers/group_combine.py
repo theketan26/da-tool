@@ -45,10 +45,9 @@ def group_combine(key, col_a, combiner):
 
     config.set_data(key, data)
     report_dups = remove_duplicate(key, cols.index(col_a))
-    config.set_data(key, report['data'])
+    config.set_data(key, report_dups['data'])
 
-    report['status'] = report_dups['status']
-    report['note'] = report_dups['note']
+    report['status'] = True
     report['data'] = report_dups['data']
 
     print('Group combining completed')

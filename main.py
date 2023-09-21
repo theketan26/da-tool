@@ -22,9 +22,9 @@ def main():
     # report_rem_dup = remove_duplicate('Bike_Features.csv')
     # print('duplicates:', report_rem_dup['duplicate'])
     # report_group_sum = group_sum('iris.json', 4, 1, 'total')
-    # report_group_combine = group_combine('iris.json', 4, ',')
-    report_group_combine = group_combine('Bike_Features.csv', 21, ',')
-    print(config.get_data('Bike_Features.csv'))
+    report_group_combine = group_combine('iris.json', 4, ',')
+    # report_group_combine = group_combine('Bike_Features.csv', 21, ',')
+    print(config.get_data('iris.json'))
     # print(report_group_sum['sums'])
 
 
