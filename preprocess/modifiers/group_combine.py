@@ -9,6 +9,12 @@ from preprocess.modifiers.remove_duplicate import remove_duplicate
 def group_combine(key, col_a, combiner):
     print('Starting group combining in', key)
 
+    report = {
+        'status': False,
+        'note': None,
+        'data': None,
+    }
+
     data = config.get_data(key)
     cols = list(data.columns)
     col_a = cols[col_a]
@@ -38,7 +44,12 @@ def group_combine(key, col_a, combiner):
             curr_row = i
 
     config.set_data(key, data)
-    report = remove_duplicate(key, cols.index(col_a))
+    report_dups = remove_duplicate(key, cols.index(col_a))
     config.set_data(key, report['data'])
 
+    report['status'] = report_dups['status']
+    report['note'] = report_dups['note']
+    report['data'] = report_dups['data']
+
     print('Group combining completed')
+    return report
