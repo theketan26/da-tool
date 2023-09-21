@@ -30,7 +30,8 @@ def load(location):
         if type(report_load['data']) == list:
             config.file_loaded += 1
             config.file_name.append('1|' + report_load['file_name'])
-            config.file_data['1|' + report_load['file_name']] = report_load['data'][0]
+            # config.file_data['1|' + report_load['file_name']] = report_load['data'][0]
+            config.set_data('1|' + report_load['file_name'], report_load['data'][0])
             report_data = report_load['data']
             report_load['file_name'] = '2|' + report_load['file_name']
             report_load['data'] = report_load['data'][1]
@@ -41,7 +42,8 @@ def load(location):
 
     config.file_loaded += 1
     config.file_name.append(report_load['file_name'])
-    config.file_data[report_load['file_name']] = report_load['data']
+    # config.file_data[report_load['file_name']] = report_load['data']
+    config.set_data(report_load['file_name'], report_load['data'])
 
     report['status'] = True
     report['file_name'] = report_load['file_name']

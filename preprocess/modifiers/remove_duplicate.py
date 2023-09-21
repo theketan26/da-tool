@@ -34,11 +34,13 @@ def remove_duplicate_table(data, column):
 def remove_duplicate(key, column=-1):
     print('Starting to remove duplicates from', key)
 
-    data = config.file_data[key]
+    # data = config.file_data[key]
+    data = config.get_data(key)
     report_rem_dup = remove_duplicate_table(data, column)
 
     if report_rem_dup['duplicate'] > 0:
-        config.file_data[key] = report_rem_dup['data']
+        # config.file_data[key] = report_rem_dup['data']
+        config.set_data(key, report_rem_dup['data'])
 
     print('Duplicates removed! Found', report_rem_dup['duplicate'])
 

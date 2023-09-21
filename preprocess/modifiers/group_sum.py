@@ -12,7 +12,8 @@ def group_sum(key, col_a, col_b, col_res_name):
     }
     sums = {}
 
-    data = config.file_data[key]
+    # data = config.file_data[key]
+    data = config.get_data(key)
     data.sort_values(data.columns[col_a])
     data[col_res_name] = [''] * len(data.index)
 
@@ -42,7 +43,8 @@ def group_sum(key, col_a, col_b, col_res_name):
     report['data'] = data
     report['sums'] = sums
 
-    config.file_data[key] = data
+    # config.file_data[key] = data
+    config.set_data(key, data)
 
     print('Group summing complete')
 

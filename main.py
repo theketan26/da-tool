@@ -6,6 +6,7 @@ from load_save.load import load
 from load_save.save import save
 from preprocess.modifiers.remove_duplicate import remove_duplicate
 from preprocess.modifiers.group_sum import group_sum
+from preprocess.modifiers.group_combine import group_combine
 
 
 def main():
@@ -19,10 +20,12 @@ def main():
     # report_rem_dup = remove_duplicate('iris.json', [1, 4])
     # report_rem_dup = remove_duplicate('iris.json', 4)
     # report_rem_dup = remove_duplicate('Bike_Features.csv')
-    report_group_sum = group_sum('iris.json', 4, 1, 'total')
-    print(config.file_data['iris.json'])
-    print(report_group_sum['sums'])
     # print('duplicates:', report_rem_dup['duplicate'])
+    # report_group_sum = group_sum('iris.json', 4, 1, 'total')
+    # report_group_combine = group_combine('iris.json', 4, ',')
+    report_group_combine = group_combine('Bike_Features.csv', 21, ',')
+    print(config.get_data('Bike_Features.csv'))
+    # print(report_group_sum['sums'])
 
 
 if __name__ == '__main__':
