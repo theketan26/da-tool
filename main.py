@@ -36,7 +36,7 @@ def main():
     # print(config.get_data('iris_combine.json'))
     # save(config.get_data('iris.json'), 'iris_combine', location, 'json')
     # print(report_group_sum['sums'])
-    look_up('master_indore_village_code.xlsx', 'master_indore_village_name.xlsx', 3, 1)
+    look_up('master_indore_village_code.xlsx', 'master_indore_village_name.xlsx', 3, 1, [0, 3])
     print(config.get_data('master_indore_village_code.xlsx'))
     # print(config.get_data('master_indore_village_name.xlsx'))
 
