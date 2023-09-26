@@ -17,3 +17,11 @@ def get_data(key):
 def set_data(key, data):
     location = os.path.join(base_path, 'data', 'pickle', key + '.pkl')
     data.to_pickle(location)
+
+
+processes = ['combine', 'sum', 'merge', 'remove duplicates']
+
+curr_table = None
+table_frame = None
+gui_table = None
+table_lbl = None

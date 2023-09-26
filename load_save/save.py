@@ -9,7 +9,8 @@ def save(data, file_name, location, format):
         'note': None
     }
 
-    full_location = os.path.join(location, file_name + '.' + format)
+    # full_location = os.path.join(location, file_name + '.' + format)
+    full_location = location
 
     i = 1
     while os.path.exists(full_location):

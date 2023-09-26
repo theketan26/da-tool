@@ -1,0 +1,237 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter import filedialog
+
+
+import config
+from load_save.load import load
+from load_save.save import save
+
+
+def set_table():
+    config.table_lbl.pack_forget()
+
+    if config.gui_table != None:
+        config.gui_table[0].pack_forget()
+        config.gui_table[1].pack_forget()
+        config.gui_table[2].pack_forget()
+
+    table_data = config.get_data(config.curr_table)
+
+    table_heads = ['SNo']
+    table_heads.extend(table_data.columns)
+
+    table = ttk.Treeview(config.table_frame,
+                         columns = tuple(table_heads),
+                         show = 'headings')
+
+    table.heading('SNo', text = 'SNo')
+    for col in table_data.columns:
+        table.heading(col, text = col)
+
+    for i, row in table_data.iterrows():
+        values = [i + 1]
+        values.extend(row)
+        table.insert(parent = '', index = i, values = values)
+
+    v_scroll_bar = ttk.Scrollbar(config.table_frame,
+                               orient = 'vertical',
+                               command = table.yview)
+    v_scroll_bar.pack(side = 'right',
+                      fill = 'y')
+    table.configure(yscrollcommand = v_scroll_bar.set)
+
+    h_scroll_bar = ttk.Scrollbar(config.table_frame,
+                               orient = 'horizontal',
+                               command = table.xview)
+    h_scroll_bar.pack(side = 'bottom',
+                      fill = 'x')
+    table.configure(xscrollcommand = h_scroll_bar.set)
+
+    config.gui_table = [table, v_scroll_bar, h_scroll_bar]
+
+    table.pack(padx = 20,
+               pady = 20,
+               expand = True,
+               fill = 'both')
+
+
+def load_file(frames):
+    filetypes = (
+        ('Comma Seperated Values', '*.csv'),
+        ('Excel Spreadsheet', '*.xlsx'),
+        ('JSON', '*.json')
+    )
+
+    location = filedialog.askopenfilename(title = 'Open file',
+                                     filetypes = filetypes)
+
+    load(location)
+
+    frames[1].pack_forget()
+    frames[2].pack_forget()
+    left_skeleton(frames[0])
+
+
+def save_file(frames):
+    location = filedialog.askdirectory()
+
+    if location == () or location == '':
+        return
+
+    save_window = tk.Tk()
+    save_window.title('Save')
+
+    formats = ('csv', 'json', 'xlsx')
+    # file_name, format = '', formats[0]
+    file_name = tk.StringVar()
+    format = tk.StringVar()
+    format.set(formats[0])
+
+    save_lbl = tk.Label(save_window,
+                        text = 'Save As:')
+    save_lbl.pack(side = 'top',
+                  padx = 10,
+                  pady = 10,)
+
+    name_frame = tk.Frame(save_window)
+    name_frame.pack()
+    name_lbl = tk.Label(name_frame,
+                        text = 'File Name:')
+    name_lbl.pack(side = 'left',
+                  padx = 10)
+    name_input = tk.Entry(name_frame,
+                          textvariable = file_name)
+    name_input.pack(side = 'left')
+
+    format_frame = tk.Frame(save_window)
+    format_frame.pack()
+    format_lbl = tk.Label(format_frame,
+                          text = 'Format:')
+    format_lbl.pack(side = 'left',
+                    padx = 10)
+    format_input = tk.Entry(format_frame,
+                            textvariable = format)
+    format_input.pack(side = 'left')
+
+    def save_():
+        save(config.get_data(config.curr_table), file_name.get(), location, format.get())
+        save_window.destroy()
+
+    save_btn = tk.Button(save_window,
+                         text = 'Save',
+                         command = save_)
+    save_btn.pack(padx = 10,
+                  pady = 10)
+
+    save_window.mainloop()
+
+
+def left_skeleton(frame):
+    upper = tk.Frame(frame)
+    upper.pack(fill = 'y')
+
+    lower = tk.Frame(frame)
+    lower.pack(fill = 'both')
+
+    load_btn = tk.Button(upper,
+                         text = "Load File",
+                         command = lambda: load_file([frame, lower, upper]))
+    save_btn = tk.Button(upper,
+                         text = "Save File",
+                         command = lambda: save_file([frame, lower, upper]))
+
+    load_btn.pack(fill = 'x',
+                  padx = 10,
+                  pady = 10)
+    save_btn.pack(fill = 'x',
+                  padx = 10,
+                  pady = 10)
+
+    loaded_lbl = tk.Label(lower,
+                          text = 'Loaded Files',)
+    loaded_lbl.pack(pady = 10,
+                    padx = 10)
+
+    files = config.file_name
+    file_btns = [None] * config.file_loaded
+
+    def set_curr_table(key):
+        config.curr_table = key
+
+        set_table()
+
+    for i, file in enumerate(files):
+        file_btns[i] = tk.Button(lower,
+                                 text = file,
+                                 command = lambda c = i: set_curr_table(file_btns[c].cget('text')))
+        file_btns[i].pack(expand = True,
+                          fill = 'both',
+                          padx = 10)
+
+
+def right_skeleton(frame):
+    # label = tk.Label(frame, text = 'This is right label', bg = 'red')
+    # label.pack(expand = True, fill = 'both')
+
+    table_frame = tk.Frame(frame, bg = 'white')
+    table_frame.pack(expand = True,
+                     fill = 'both')
+    config.table_frame = table_frame
+
+    if config.curr_table != None:
+        table_data = config.get_data(config.curr_table)
+
+        table = ttk.Treeview(table_frame,
+                             colunms = table_data.columns,
+                             show = 'headings',
+                             bg = 'white')
+        table.pack(padx = 20,
+                   pady = 20)
+
+    else:
+        table_lbl = tk.Label(table_frame,
+                             text = 'No Table Selected!',
+                             bg = 'white')
+        table_lbl.pack(padx = 10,
+                       pady = 10)
+        config.table_lbl = table_lbl
+
+    table_option = tk.Frame(frame)
+    table_option.pack(side = 'bottom',
+                      fill = 'y',
+                      padx = 10,
+                      pady = 10)
+
+    # options = tk.StringVar('combine')
+    # option_lbl = tk.Label(table_option,
+    #                       textvariable = options
+    #                       )
+    # option_lbl.pack(side = 'left',
+    #                 padx = 10,
+    #                 expand = True
+    #                 )
+
+    options = config.processes
+    process = options[0]
+    option_menu = ttk.Combobox(table_option,
+                               textvariable = process,
+                               values = options)
+    option_menu.pack(side = 'left',
+                     padx = 10)
+
+    option_btn = tk.Button(table_option,
+                           text = 'Apply')
+    option_btn.pack(side = 'right',
+                    padx = 10)
+
+
+def setup_skeleton(root):
+    left_frame = tk.Frame(root)
+    right_frame = tk.Frame(root)
+
+    left_frame.pack(side = 'left', fill = 'both')
+    right_frame.pack(side = 'left', fill = 'both', expand = True)
+
+    left_skeleton(left_frame)
+    right_skeleton(right_frame)
