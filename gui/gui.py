@@ -11,6 +11,8 @@ def show_gui():
     root.geometry("1000x600")
     root.title("Data Analysis Tool")
 
+    config.root = root
+
     setup_skeleton(root)
 
     root.mainloop()

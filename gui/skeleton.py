@@ -6,6 +6,7 @@ from tkinter import filedialog
 import config
 from load_save.load import load
 from load_save.save import save
+from gui.sum import show_sum
 
 
 def set_table():
@@ -26,13 +27,15 @@ def set_table():
                          show = 'headings')
 
     table.heading('SNo', text = 'SNo')
-    for col in table_data.columns:
-        table.heading(col, text = col)
+    for i, col in enumerate(table_data.columns):
+        table.heading(col, text = col + '|' + str(i))
 
-    for i, row in table_data.iterrows():
+    i = 0
+    for _, row in table_data.iterrows():
         values = [i + 1]
         values.extend(row)
         table.insert(parent = '', index = i, values = values)
+        i += 1
 
     v_scroll_bar = ttk.Scrollbar(config.table_frame,
                                orient = 'vertical',
@@ -177,17 +180,22 @@ def right_skeleton(frame):
     table_frame = tk.Frame(frame, bg = 'white')
     table_frame.pack(expand = True,
                      fill = 'both')
+
     config.table_frame = table_frame
 
     if config.curr_table != None:
         table_data = config.get_data(config.curr_table)
 
+        # cols = list(map(lambda i, x: x + '|' + i, enumerate(table_data.columns)))
+
         table = ttk.Treeview(table_frame,
-                             colunms = table_data.columns,
+                             # colunms = cols,
                              show = 'headings',
                              bg = 'white')
         table.pack(padx = 20,
                    pady = 20)
+
+        config.gui_table = table
 
     else:
         table_lbl = tk.Label(table_frame,
@@ -220,8 +228,21 @@ def right_skeleton(frame):
     option_menu.pack(side = 'left',
                      padx = 10)
 
+    def proceed():
+        curr_proc = config.processes[option_menu.current()]
+
+        if curr_proc == 'sum':
+            show_sum()
+
+        try:
+            config.gui_table[0].pack_forget()
+            set_table()
+        except:
+            pass
+
     option_btn = tk.Button(table_option,
-                           text = 'Apply')
+                           text = 'Apply',
+                           command = proceed)
     option_btn.pack(side = 'right',
                     padx = 10)
 

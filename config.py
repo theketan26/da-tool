@@ -3,10 +3,10 @@ import pandas as pd
 
 
 base_path = os.path.abspath('')
+root = None
 
 file_loaded = 0
 file_name = []
-file_data = {}
 
 
 def get_data(key):
