@@ -22,21 +22,27 @@ def show_combine():
     group_frame.pack(padx = 10,
                      pady = 10)
     tk.Label(group_frame,
-             text = 'Group By:'
-             ).pack(side = 'left')
+             text = 'Group By:',
+             justify = 'left'
+             ).grid(row = 0,
+                    column = 0)
     group_ent = tk.Entry(group_frame,
                          textvariable = group_col)
-    group_ent.pack(side = 'left')
+    group_ent.grid(row = 0,
+                   column = 1)
 
     combiner_frame = tk.Frame(comb_win)
     combiner_frame.pack(padx = 10,
                         pady = 10)
     tk.Label(combiner_frame,
-             text = 'Combiner:'
-             ).pack(side = 'left')
+             text = 'Combiner:',
+             justify = 'left'
+             ).grid(row = 0,
+                    column = 0)
     combiner_ent = tk.Entry(combiner_frame,
                             textvariable = combiner)
-    combiner_ent.pack(side = 'left')
+    combiner_ent.grid(row = 0,
+                      column = 1)
 
     def proceed():
         group_, combiner_ = None, None

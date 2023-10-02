@@ -27,30 +27,39 @@ def show_sum():
                      pady = 10)
     tk.Label(group_frame,
              text = 'Group By:',
-             ).pack(side = 'left')
+             justify = 'left'
+             ).grid(row = 0,
+                    column = 0)
     group_ent = tk.Entry(group_frame,
              textvariable = group_col)
-    group_ent.pack(side = 'left')
+    group_ent.grid(row = 0,
+                   column = 1)
 
     sum_frame = tk.Frame(sum_win)
     sum_frame.pack(padx = 10,
                    pady = 10)
     tk.Label(sum_frame,
-             text = 'Sum By:'
-             ).pack(side = 'left')
+             text = 'Sum By:',
+             justify = 'left'
+             ).grid(row = 0,
+                    column = 0)
     sum_ent = tk.Entry(sum_frame,
-             textvariable = sum_col)
-    sum_ent.pack(side = 'left')
+                       textvariable = sum_col)
+    sum_ent.grid(row = 0,
+                 column = 1)
 
     res_frame = tk.Frame(sum_win)
     res_frame.pack(padx = 10,
                  pady = 10)
     tk.Label(res_frame,
-             text = 'Result Name:'
-             ).pack(side = 'left')
+             text = 'Result Name:',
+             justify = 'left'
+             ).grid(row = 0,
+                    column = 0)
     res_ent = tk.Entry(res_frame,
-             textvariable = res_col)
-    res_ent.pack(side = 'left')
+                       textvariable = res_col)
+    res_ent.grid(row = 0,
+                 column = 1)
 
     def perf():
         group, sum_, result = None, None, None

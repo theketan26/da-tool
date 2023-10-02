@@ -13,7 +13,7 @@ from gui.merge import show_merge
 
 
 def set_table():
-    config.table_lbl.pack_forget()
+    config.table_lbl.config(text = config.curr_table)
 
     if config.gui_table != None:
         config.gui_table[0].pack_forget()
@@ -32,6 +32,9 @@ def set_table():
     table.heading('SNo', text = 'SNo')
     for i, col in enumerate(table_data.columns):
         table.heading(col, text = col + '|' + str(i))
+        # table.column(col, stretch = True)
+        # min_width = table.column(col, option = 'minwidth')
+        # table.column(col, width = min_width)
 
     i = 0
     for _, row in table_data.iterrows():
@@ -187,7 +190,7 @@ def right_skeleton(frame):
     config.table_frame = table_frame
 
     if config.curr_table != None:
-        table_data = config.get_data(config.curr_table)
+        # table_data = config.get_data(config.curr_table)
 
         # cols = list(map(lambda i, x: x + '|' + i, enumerate(table_data.columns)))
 

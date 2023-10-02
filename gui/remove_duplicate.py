@@ -25,7 +25,8 @@ def show_remove_duplicate():
     group_frame.pack(padx = 10,
                      pady = 10)
     tk.Label(group_frame,
-             text = 'Group By:'
+             text = 'Group By:',
+             justify = 'left'
              ).pack(side = 'left')
     group_ent = tk.Entry(group_frame,
                          textvariable = group_col)
