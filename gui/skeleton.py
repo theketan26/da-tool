@@ -7,6 +7,7 @@ import config
 from load_save.load import load
 from load_save.save import save
 from gui.sum import show_sum
+from gui.combine import show_combine
 
 
 def set_table():
@@ -233,6 +234,9 @@ def right_skeleton(frame):
 
         if curr_proc == 'sum':
             show_sum()
+
+        elif curr_proc == 'combine':
+            show_combine()
 
         try:
             config.gui_table[0].pack_forget()
