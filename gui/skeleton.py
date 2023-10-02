@@ -9,6 +9,7 @@ from load_save.save import save
 from gui.sum import show_sum
 from gui.combine import show_combine
 from gui.remove_duplicate import show_remove_duplicate
+from gui.merge import show_merge
 
 
 def set_table():
@@ -241,6 +242,9 @@ def right_skeleton(frame):
 
         elif curr_proc == 'remove duplicate':
             show_remove_duplicate()
+
+        elif curr_proc == 'merge':
+            show_merge()
 
         try:
             config.gui_table[0].pack_forget()
