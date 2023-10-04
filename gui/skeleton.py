@@ -138,7 +138,9 @@ def save_file(frames):
 
 def left_skeleton(frame):
     upper = tk.Frame(frame)
-    upper.pack(fill = 'y')
+    upper.pack(fill = 'y',
+               padx = 10,
+               pady = 10)
 
     lower = tk.Frame(frame)
     lower.pack(fill = 'both')
@@ -150,12 +152,8 @@ def left_skeleton(frame):
                          text = "Save File",
                          command = lambda: save_file([frame, lower, upper]))
 
-    load_btn.pack(fill = 'x',
-                  padx = 10,
-                  pady = 10)
-    save_btn.pack(fill = 'x',
-                  padx = 10,
-                  pady = 10)
+    load_btn.pack(fill = 'x')
+    save_btn.pack(fill = 'x')
 
     loaded_lbl = tk.Label(lower,
                           text = 'Loaded Files',)
@@ -227,15 +225,20 @@ def right_skeleton(frame):
     #                 )
 
     options = config.processes
-    process = options[0]
+    process = tk.StringVar()
     option_menu = ttk.Combobox(table_option,
                                textvariable = process,
-                               values = options)
+                               values = options,
+                               state = 'readonly')
+    option_menu.current(0)
     option_menu.pack(side = 'left',
                      padx = 10)
 
     def proceed():
         curr_proc = config.processes[option_menu.current()]
+
+        if config.curr_table == None:
+            return
 
         if curr_proc == 'sum':
             show_sum()
@@ -247,10 +250,12 @@ def right_skeleton(frame):
             show_remove_duplicate()
 
         elif curr_proc == 'merge':
-            show_merge()
+            if config.file_loaded > 2:
+                show_merge()
 
         elif curr_proc == 'column':
-            show_column()
+            # show_column()
+            pass
 
         try:
             config.gui_table[0].pack_forget()

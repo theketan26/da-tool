@@ -1,16 +1,19 @@
 import tkinter as tk
+from tkinter import ttk
 
 import config
 from preprocess.modifiers.group_sum import group_sum
 
 
 def show_sum():
+    columns = list(config.get_data(config.curr_table).columns)
+
     sum_win = tk.Toplevel(config.root)
     sum_win.grab_set()
     sum_win.title('Sum Options')
 
-    group_col = tk.IntVar()
-    sum_col = tk.IntVar()
+    group_col = tk.StringVar()
+    sum_col = tk.StringVar()
     res_col = tk.StringVar()
 
     tk.Label(sum_win,
@@ -30,8 +33,12 @@ def show_sum():
              justify = 'left'
              ).grid(row = 0,
                     column = 0)
-    group_ent = tk.Entry(group_frame,
-             textvariable = group_col)
+    # group_ent = tk.Entry(group_frame,
+    #          textvariable = group_col)
+    group_ent = ttk.Combobox(group_frame,
+                             textvariable = group_col,
+                             values = columns,
+                             state = 'readonly')
     group_ent.grid(row = 0,
                    column = 1)
 
@@ -43,14 +50,18 @@ def show_sum():
              justify = 'left'
              ).grid(row = 0,
                     column = 0)
-    sum_ent = tk.Entry(sum_frame,
-                       textvariable = sum_col)
+    # sum_ent = tk.Entry(sum_frame,
+    #                    textvariable = sum_col)
+    sum_ent = ttk.Combobox(sum_frame,
+                           textvariable = sum_col,
+                           values = columns,
+                           state = 'readonly')
     sum_ent.grid(row = 0,
                  column = 1)
 
     res_frame = tk.Frame(sum_win)
     res_frame.pack(padx = 10,
-                 pady = 10)
+                   pady = 10)
     tk.Label(res_frame,
              text = 'Result Name:',
              justify = 'left'
@@ -65,8 +76,8 @@ def show_sum():
         group, sum_, result = None, None, None
         while 1:
             try:
-                group = int(group_ent.get())
-                sum_ = int(sum_ent.get())
+                group = columns.index(group_ent.get())
+                sum_ = columns.index(sum_col.get())
                 result = res_ent.get()
                 break
             except:

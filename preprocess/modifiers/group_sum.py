@@ -32,12 +32,6 @@ def group_sum(key, col_a, col_b, col_res_name):
                 return report
 
         else:
-            print()
-            print()
-            print(i, row.iloc[col_a], curr_head, row.iloc[col_a] == curr_head)
-            print()
-            print()
-
             sums[curr_head] = total
             data.iloc[i - 1, -1] = total
             total = 0
@@ -57,11 +51,6 @@ def group_sum(key, col_a, col_b, col_res_name):
 
     # config.file_data[key] = data
     config.set_data(key, data)
-    print()
-    print()
-    print(sums)
-    print()
-    print()
 
     # data_trimmed = remove_duplicate(key, col_a)
     # config.set_data(key, data_trimmed['data'])
