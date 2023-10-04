@@ -16,12 +16,17 @@ from gui.visualize import visualize
 
 
 def set_table():
-    config.table_lbl.config(text = config.curr_table)
+    try:
+        config.table_lbl.config(text = config.curr_table)
+    except:
+        pass
 
-    if config.gui_table != None:
+    try:
         config.gui_table[0].pack_forget()
         config.gui_table[1].pack_forget()
         config.gui_table[2].pack_forget()
+    except:
+        pass
 
     table_data = config.get_data(config.curr_table)
 
@@ -34,8 +39,13 @@ def set_table():
 
     table.heading('SNo', text = 'SNo')
 
+    def proceed(c):
+        show_column(c)
+
     for i, col in enumerate(table_data.columns):
-        table.heading(col, text = col + '|' + str(i))
+        table.heading(col,
+                      text = col + '|' + str(i),
+                      command = lambda c = i: proceed(c))
 
     i = 0
     for _, row in table_data.iterrows():
