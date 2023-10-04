@@ -4,6 +4,7 @@ from tkinter import messagebox
 
 
 from preprocess.modifiers.add_remove import add, remove
+from preprocess.modifiers.operate import operate
 import config
 
 
@@ -68,6 +69,70 @@ def remove_column(col_id):
         remove(config.curr_table, col_id)
 
 
+def operate_column(col_id):
+    win = tk.Toplevel(config.root)
+    win.title('Operate Column')
+    win.grab_set()
+
+    tk.Label(win,
+             text = 'Operate'
+             ).pack(padx = 10,
+                    pady = 10)
+
+    frame = tk.Frame(win)
+    frame.pack(padx = 10,
+               pady = 10)
+
+    b_ent = tk.StringVar()
+    b_var = tk.IntVar()
+    columns = list(config.curr_data.columns)
+
+    a = tk.Label(frame,
+                 text = columns[col_id])
+    a.grid(row = 0,
+           column = 0)
+
+    ops = list(config.operators)
+    op = ttk.Combobox(frame,
+                      values = ops,
+                      state = 'readonly',
+                      width = 2)
+    op.current(0)
+    op.grid(row = 0,
+            column = 1,
+            padx = 5)
+
+    b = tk.Entry(frame,
+                 textvariable = b_ent)
+    b.grid(row = 0,
+           column = 2)
+
+    b_opt = tk.Checkbutton(frame,
+                           text = 'Column?',
+                           variable = b_var)
+    b_opt.grid(row = 1,
+               column = 2)
+
+    def proceed():
+        op_ = op.get()
+        b_ = b_ent.get()
+        b_opt_ = b_var.get()
+
+        operate(config.curr_table, col_id, b_, b_opt_, op_)
+
+        win.grab_release()
+        win.quit()
+        win.destroy()
+
+    tk.Button(win,
+              text = 'Operate',
+              command = proceed
+              ).pack(padx = 10,
+                     pady = 10)
+
+    win.mainloop()
+
+
 def main_menu(col_id):
     col_win = tk.Toplevel(config.root)
     col_win.grab_set()
@@ -101,6 +166,9 @@ def main_menu(col_id):
 
         elif option == 'Remove':
             remove_column(col_id)
+
+        elif option == 'Operate':
+            operate_column(col_id)
 
     tk.Button(col_win,
               text = 'Next',
