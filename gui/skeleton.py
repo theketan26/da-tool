@@ -12,6 +12,7 @@ from gui.combine import show_combine
 from gui.remove_duplicate import show_remove_duplicate
 from gui.merge import show_merge
 from gui.column import show_column
+from gui.visualize import visualize
 
 
 def set_table():
@@ -57,6 +58,7 @@ def set_table():
                       fill = 'x')
     table.configure(xscrollcommand = h_scroll_bar.set)
 
+    config.curr_data = table_data
     config.gui_table = [table, v_scroll_bar, h_scroll_bar]
 
     table.pack(padx = 20,
@@ -214,6 +216,15 @@ def right_skeleton(frame):
                       fill = 'y',
                       padx = 10,
                       pady = 10)
+
+    def visual_proceed():
+        if config.curr_table:
+            visualize()
+
+    visualize_btn = tk.Button(table_option,
+                             text = 'Visualize',
+                             command = visual_proceed)
+    visualize_btn.pack(side = 'left')
 
     # options = tk.StringVar('combine')
     # option_lbl = tk.Label(table_option,

@@ -20,8 +20,10 @@ def set_data(key, data):
 
 
 processes = ['column', 'combine', 'sum', 'merge', 'remove duplicate']
+visuals = ['Line Plot', 'Bar Plot']
 
 curr_table = None
+curr_data = None
 table_frame = None
 gui_table = None
 table_lbl = None
