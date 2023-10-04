@@ -36,16 +36,17 @@ def plot(type = 'Line'):
     x_ent.grid(row = 0,
                column = 1)
 
-    tk.Label(ent_win,
-             text = 'Y:'
-             ).grid(row = 1,
-                    column = 0)
-    y_ent = ttk.Combobox(ent_win,
-                         values = columns,
-                         state = 'readonly')
-    y_ent.current(0)
-    y_ent.grid(row = 1,
-               column = 1)
+    if type != 'Histogram':
+        tk.Label(ent_win,
+                 text = 'Y:'
+                 ).grid(row = 1,
+                        column = 0)
+        y_ent = ttk.Combobox(ent_win,
+                             values = columns,
+                             state = 'readonly')
+        y_ent.current(0)
+        y_ent.grid(row = 1,
+                   column = 1)
 
     def proceed():
         x, y = x_ent.get(), y_ent.get()
@@ -62,10 +63,16 @@ def plot(type = 'Line'):
         elif type == 'Bar':
             plt.bar(x_data, y_data)
 
-        show_graph()
+        elif type == 'Scatter':
+            plt.bar(x_data, y_data)
+
+        elif type == 'Histogram':
+            plt.hist(x_data)
 
         win.grab_release()
         win.destroy()
+
+        show_graph()
 
     ent_btn = tk.Button(win,
                         text = 'Visualize',
@@ -102,8 +109,14 @@ def visualize():
         if option == 'Line Plot':
             plot()
 
-        if option == 'Bar Plot':
+        elif option == 'Bar Plot':
             plot('Bar')
+
+        elif option == 'Bar Plot':
+            plot('Histogram')
+
+        elif option == 'Scatter Plot':
+            plot('Scatter')
 
     tk.Button(visual_win,
               text = 'Visual',
