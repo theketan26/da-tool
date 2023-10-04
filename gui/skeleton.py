@@ -1,3 +1,4 @@
+import copy
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
@@ -10,6 +11,7 @@ from gui.sum import show_sum
 from gui.combine import show_combine
 from gui.remove_duplicate import show_remove_duplicate
 from gui.merge import show_merge
+from gui.column import show_column
 
 
 def set_table():
@@ -30,11 +32,9 @@ def set_table():
                          show = 'headings')
 
     table.heading('SNo', text = 'SNo')
+
     for i, col in enumerate(table_data.columns):
         table.heading(col, text = col + '|' + str(i))
-        # table.column(col, stretch = True)
-        # min_width = table.column(col, option = 'minwidth')
-        # table.column(col, width = min_width)
 
     i = 0
     for _, row in table_data.iterrows():
@@ -248,6 +248,9 @@ def right_skeleton(frame):
 
         elif curr_proc == 'merge':
             show_merge()
+
+        elif curr_proc == 'column':
+            show_column()
 
         try:
             config.gui_table[0].pack_forget()

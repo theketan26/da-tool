@@ -19,7 +19,7 @@ def set_data(key, data):
     data.to_pickle(location)
 
 
-processes = ['combine', 'sum', 'merge', 'remove duplicate']
+processes = ['column', 'combine', 'sum', 'merge', 'remove duplicate']
 
 curr_table = None
 table_frame = None
