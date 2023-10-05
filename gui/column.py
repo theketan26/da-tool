@@ -214,6 +214,30 @@ def sort_column(col_id):
     win.mainloop()
 
 
+def filter_column(col_id):
+    win = tk.Toplevel(config.root)
+    win.grab_set()
+    win.title('Filter Options')
+
+    tk.Label(win,
+             text = 'Filter'
+             ).pack(padx = 10,
+                    pady = 10)
+
+    frame = tk.Frame(win)
+    frame.pack(padx = 10,
+               pady = 10)
+
+    tk.Label(frame,
+             text = 'Action:',
+             justify = 'left'
+             ).grid(row = 0,
+                    column = 0)
+    actions = ['Equals', 'Greater than', 'Less than', 'Like']
+
+    win.mainloop()
+
+
 def main_menu(col_id):
     col_win = tk.Toplevel(config.root)
     col_win.grab_set()
@@ -253,6 +277,9 @@ def main_menu(col_id):
 
         elif option == 'Sort':
             sort_column(col_id)
+
+        elif option == 'Filter':
+            filter_column(col_id)
 
     tk.Button(col_win,
               text = 'Next',

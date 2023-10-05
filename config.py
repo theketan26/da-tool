@@ -21,7 +21,7 @@ def set_data(key, data):
 
 processes = ['column', 'combine', 'sum', 'merge', 'remove duplicate']
 visuals = ['Line Plot', 'Bar Plot', 'Histogram Plot', 'Scatter Plot']
-column_process = ['Add', 'Remove', 'Operate', 'Sort']
+column_process = ['Add', 'Remove', 'Operate', 'Sort', 'Filter']
 operators = ['Add/Concat', 'Compare(=)', 'Compare(>)', 'Compare(<)']
 
 curr_table = None
