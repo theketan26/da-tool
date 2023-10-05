@@ -87,31 +87,70 @@ def operate_column(col_id):
     b_var = tk.IntVar()
     columns = list(config.curr_data.columns)
 
-    a = tk.Label(frame,
-                 text = columns[col_id])
-    a.grid(row = 0,
-           column = 0)
+    # a = tk.Label(frame,
+    #              text = columns[col_id])
+    # a.grid(row = 0,
+    #        column = 0)
+
+    tk.Label(frame,
+             text = 'Current Column:',
+             justify = 'left'
+             ).grid(row = 0,
+                    column = 0)
+    tk.Label(frame,
+             text = columns[col_id],
+             justify = 'left'
+             ).grid(row = 0,
+                    column = 1)
 
     ops = list(config.operators)
+
+    # op = ttk.Combobox(frame,
+    #                   values = ops,
+    #                   state = 'readonly',
+    #                   width = 2)
+    # op.current(0)
+    # op.grid(row = 0,
+    #         column = 1,
+    #         padx = 5)
+
+    tk.Label(frame,
+             text = 'Action:',
+             justify = 'left'
+             ).grid(row = 1,
+                    column = 0)
     op = ttk.Combobox(frame,
                       values = ops,
-                      state = 'readonly',
-                      width = 2)
+                      state = 'readonly')
     op.current(0)
-    op.grid(row = 0,
-            column = 1,
-            padx = 5)
+    op.grid(row = 1,
+            column = 1)
 
+    # b = tk.Entry(frame,
+    #              textvariable = b_ent)
+    # b.grid(row = 0,
+    #        column = 2)
+    #
+    # b_opt = tk.Checkbutton(frame,
+    #                        text = 'Column?',
+    #                        variable = b_var)
+    # b_opt.grid(row = 1,
+    #            column = 2)
+
+    tk.Label(frame,
+             text = 'Operand:',
+             justify = 'left'
+             ).grid(row = 2,
+                    column = 0)
     b = tk.Entry(frame,
                  textvariable = b_ent)
-    b.grid(row = 0,
-           column = 2)
-
+    b.grid(row = 2,
+           column = 1)
     b_opt = tk.Checkbutton(frame,
                            text = 'Column?',
                            variable = b_var)
-    b_opt.grid(row = 1,
-               column = 2)
+    b_opt.grid(row = 3,
+               column = 1)
 
     def proceed():
         op_ = op.get()
