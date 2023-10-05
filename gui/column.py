@@ -5,6 +5,8 @@ from tkinter import messagebox
 
 from preprocess.modifiers.add_remove import add, remove
 from preprocess.modifiers.operate import operate
+from preprocess.modifiers.sort import sort
+
 import config
 
 
@@ -172,6 +174,46 @@ def operate_column(col_id):
     win.mainloop()
 
 
+def sort_column(col_id):
+    win = tk.Toplevel(config.root)
+    win.grab_set()
+    win.title('Sort Options')
+
+    tk.Label(win,
+             text = 'Sort'
+             ).pack(padx = 10,
+                    pady = 10)
+
+    asc = ttk.Combobox(win,
+                       values = ['Ascending', 'Descending'],
+                       state = 'readonly')
+    asc.current(0)
+    asc.pack(padx = 10,
+             pady = 10)
+
+    def proceed():
+        asc_ = asc.get()
+
+        if asc_ == 'Ascending':
+            asc_ = True
+        else:
+            asc_ = False
+
+        sort(config.curr_table, col_id, asc_)
+
+        win.grab_release()
+        win.quit()
+        win.destroy()
+
+    tk.Button(win,
+              text = 'Sort',
+              command = proceed
+              ).pack(padx = 10,
+                     pady = 10)
+
+    win.mainloop()
+
+
 def main_menu(col_id):
     col_win = tk.Toplevel(config.root)
     col_win.grab_set()
@@ -208,6 +250,9 @@ def main_menu(col_id):
 
         elif option == 'Operate':
             operate_column(col_id)
+
+        elif option == 'Sort':
+            sort_column(col_id)
 
     tk.Button(col_win,
               text = 'Next',
