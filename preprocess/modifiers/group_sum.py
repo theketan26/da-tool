@@ -2,7 +2,7 @@ import config
 from preprocess.modifiers.remove_duplicate import remove_duplicate
 
 
-def group_sum(key, col_a, col_b, col_res_name):
+def group_sum(key, col_a, col_b):
     print('Starting group sum in', key)
 
     report = {
@@ -15,42 +15,14 @@ def group_sum(key, col_a, col_b, col_res_name):
 
     # data = config.file_data[key]
     data = config.get_data(key)
-    data = data.sort_values(by = str(data.columns[col_a]))
-    data[col_res_name] = [''] * len(data.index)
 
-    total = 0
-    curr_head = ''
-    for i, row in data.iterrows():
-        if curr_head == '':
-            curr_head = row.iloc[col_a]
-
-        if row.iloc[col_a] == curr_head:
-            try:
-                total += float(row.iloc[col_b])
-            except ValueError as err:
-                report['note'] = 'All values in columns must be number'
-                return report
-
-        else:
-            sums[curr_head] = total
-            data.iloc[i - 1, -1] = total
-            total = 0
-            curr_head = row.iloc[col_a]
-            try:
-                total = float(row.iloc[col_b])
-            except ValueError as err:
-                report['note'] = 'All values in columns must be number'
-                return report
-
-    data.iloc[-1, -1] = total
-    sums[curr_head] = total
+    grouped_sum = data.groupby(col_a)[col_b].sum().reset_index()
 
     report['status'] = True
-    report['data'] = data
-    report['sums'] = sums
+    report['data'] = grouped_sum
 
     # config.file_data[key] = data
-    config.set_data(key, data)
+    config.set_data(key, grouped_sum)
 
     # data_trimmed = remove_duplicate(key, col_a)
     # config.set_data(key, data_trimmed['data'])

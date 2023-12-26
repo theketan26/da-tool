@@ -59,34 +59,13 @@ def show_sum():
     sum_ent.grid(row = 0,
                  column = 1)
 
-    res_frame = tk.Frame(sum_win)
-    res_frame.pack(padx = 10,
-                   pady = 10)
-    tk.Label(res_frame,
-             text = 'Result Name:',
-             justify = 'left'
-             ).grid(row = 0,
-                    column = 0)
-    res_ent = tk.Entry(res_frame,
-                       textvariable = res_col)
-    res_ent.grid(row = 0,
-                 column = 1)
 
     def perf():
         group, sum_, result = None, None, None
-        while 1:
-            try:
-                group = columns.index(group_ent.get())
-                sum_ = columns.index(sum_col.get())
-                result = res_ent.get()
-                break
-            except:
-                continue
 
         report = group_sum(key = config.curr_table,
-                           col_a = group,
-                           col_b = sum_,
-                           col_res_name = result)
+                           col_a = group_ent.get(),
+                           col_b = sum_col.get())
 
         sum_win.grab_release()
         sum_win.quit()
